@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--相当于实现以前的接口-->
+<mapper namespace="com.wang.mapper.ICarMapper">
+
+    <resultMap id="firstResultMap" type="Car">
+        <id property="cId" column="c_id"></id>
+        <result property="num" column="c_num"></result>
+        <result property="userId" column="c_uId"></result>
+        <result property="goodsId" column="c_gId"></result>
+        <result property="isDelete" column="is_delete"></result>
+    </resultMap>
+
+    <sql id="defaultSelectSql">
+        select * from car
+    </sql>
+
+    <select id="findCarByUid" resultMap="firstResultMap">
+        <include refid="defaultSelectSql"></include>
+        where c_uId=#{uId};
+    </select>
+
+</mapper>

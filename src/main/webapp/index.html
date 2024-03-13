@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#btn1").click(function () {
+                debugger;
+                var username;
+                var password;
+                if ($("#searchType").val()=="username"){
+                    username = $("#search").val();
+                    $.ajax({
+                        url:"/ssm2/student/find?username="+username,
+                        type:"GET",
+                        // data:'{"username":"老王","password":"5566"}',
+                        contentType:"application/json;charset=UTF-8",
+                        dataType:"JSON",
+                        success:function (data) {
+                            debugger;
+                            if (data.length>0) {
+                                alert("查询成功");
+                                /*  a = $("#sel").val();
+                                    b = $("#sel option:checked").text();
+                                    alert("被选项目的值："+a+"，被选项目的显示值："+b+"。");*/
+                                // alert(data[0].id+data[0].username+data[0].password);
+                                $.each(data,function (index, value) {
+                                    alert(value.id+value.username+value.password);
+                                })
+                            }else{
+                                alert("查询失败");
+                            }
+                        }
+
+                    })
+
+                }else if ($("#searchType").val()=="password") {
+                    password = $("#search").val();
+                    $.ajax({
+                        url:"/ssm2/student/find?password="+password,
+                        type:"GET",
+                        // data:'{"username":"老王","password":"5566"}',
+                        contentType:"application/json;charset=UTF-8",
+                        dataType:"JSON",
+                        success:function (data) {
+                            debugger;
+                            if (data.length>0) {
+                                alert("查询成功");
+                                $.each(data,function (index, value) {
+                                    alert(value.id+value.username+value.password);
+                                })
+                            }else{
+                                alert("查询失败");
+                            }
+                        }
+
+                    })
+                }
+
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <form>
+        <input type="text" name="search" id="search">
+        <select name="searchType" id="searchType">
+            <option value="username" >用户名</option>
+            <option value="password" >密码</option>
+        </select>
+        <button type="button" id="btn1">查询</button>
+    </form>
+</body>
+</html>

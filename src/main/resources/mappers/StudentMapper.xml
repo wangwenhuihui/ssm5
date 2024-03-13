@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--相当于实现以前的接口-->
+<mapper namespace="com.wang.mapper.IStudentMapper">
+    <!--sql语句的封装-->
+    <sql id="defaultSelectSql">
+        select * from student
+    </sql>
+
+    <resultMap id="firstResultMap" type="Student">
+        <id property="id" column="id"></id>
+        <result property="username" column="username"></result>
+        <result property="password" column="password"></result>
+    </resultMap>
+
+    <select id="findStudentByCondition" resultMap="firstResultMap">
+        <include refid="defaultSelectSql"></include>
+        <where>
+            <if test="username!=null and username!=''">
+                and username like #{username}
+            </if>
+            <if test="password!=null and password!=''">
+                and password like #{password}
+            </if>
+        </where>
+    </select>
+
+</mapper>

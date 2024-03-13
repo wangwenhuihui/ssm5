@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#search").click(function () {
+                $.ajax({
+                    url:"/ssm2/userController/findUserById/2",
+                    type:"GET",
+                    // data:'{"username":"老王","password":"5566"}',
+                    contentType:"application/json;charset=UTF-8",
+                    dataType:"JSON",
+                    success:function (data) {
+                        debugger;
+                        alert(data.username);
+                        //处理返回来的JSON格式数据，转化地址，显示内容
+                        var message = JSON.stringify(data);
+                        $("#span4").html(message);
+                        alert(message);
+
+                        alert("查询成功");
+                        var cars = data["cars"];
+                        $.each(cars,function (index,value) {
+                            var str= value.cId+","+value.num+","+value.userId+","+value.goodsId+","+value.isDelete;
+                            $("#span"+(index+1)).html(str);
+                            alert(str);
+                        })
+                        alert(data["uId"]+data["username"]+data["password"]+data["isDelete"]);
+                        $("#span3").html(data["uId"]+data["username"]+data["password"]+data["isDelete"]);
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <button type="button" id="search">查询</button>
+    <span id="span1"></span>
+    <span id="span2"></span>
+    <span id="span3"></span>
+    <span id="span4"></span>
+</body>
+</html>

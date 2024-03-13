@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--相当于实现以前的接口-->
+<mapper namespace="com.wang.mapper.IUserMapper">
+    <resultMap id="firstResultMap" type="User">
+        <id property="uId" column="u_id"></id>
+        <result property="username" column="u_username"></result>
+        <result property="password" column="u_password"></result>
+        <result property="isDelete" column="is_delete"></result>
+
+        <collection property="cars"
+                    ofType="Car"
+                    column="u_id"
+                    select="com.wang.mapper.ICarMapper.findCarByUid"/>
+    </resultMap>
+    <sql id="defaultSelectSql">
+        select * from user
+    </sql>
+    <select id="findUserById" resultMap="firstResultMap">
+        <include refid="defaultSelectSql"></include>
+        where u_id=#{id};
+    </select>
+
+</mapper>
